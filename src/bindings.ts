@@ -798,6 +798,35 @@ async rescanLocalModels() : Promise<Result<null, string>> {
     else return { status: "error", error: e  as any };
 }
 },
+/**
+ * Ask Hugging Face for speech models the app can run that it hasn't seen yet.
+ * Adds them to the model list and marks them new until the Models page is left.
+ */
+async checkModelUpdates() : Promise<Result<UpdateReport, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("check_model_updates") };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * When the last update ran, and which models are still new.
+ */
+async getModelUpdateState() : Promise<UpdateSnapshot> {
+    return await TAURI_INVOKE("get_model_update_state");
+},
+/**
+ * The user has seen the new models: they move into their normal sections.
+ */
+async markNewModelsSeen() : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("mark_new_models_seen") };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
 async updateMicrophoneMode(alwaysOn: boolean) : Promise<Result<null, string>> {
     try {
     return { status: "ok", data: await TAURI_INVOKE("update_microphone_mode", { alwaysOn }) };
@@ -1547,6 +1576,30 @@ export type TranscriptionOutcome =
  */
 "failed"
 export type TypingTool = "auto" | "wtype" | "kwtype" | "dotool" | "ydotool" | "xdotool"
+/**
+ * What the update button returns.
+ */
+export type UpdateReport = { 
+/**
+ * Repos inspected.
+ */
+checked: number; 
+/**
+ * Ids added to the app's model list.
+ */
+added: string[]; 
+/**
+ * When the check ran (unix seconds).
+ */
+fetchedAt: number | null; 
+/**
+ * Set when the network call failed; `added` is then empty.
+ */
+error: string | null }
+/**
+ * The persisted state, as the Models page reads it.
+ */
+export type UpdateSnapshot = { fetchedAt: number | null; newIds: string[] }
 export type VadBackend = "silero" | "earshot"
 export type WindowsMicrophonePermissionStatus = { supported: boolean; overall_access: PermissionAccess; device_access: PermissionAccess; app_access: PermissionAccess; desktop_app_access: PermissionAccess }
 

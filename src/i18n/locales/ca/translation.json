@@ -397,7 +397,8 @@
       "sections": {
         "yours": "En aquest ordinador",
         "fits": "Per a les vostres llengües",
-        "untested": "Sense provar"
+        "untested": "Sense provar",
+        "new": "New models"
       },
       "untestedNote": "No s'han provat amb el candyAI. Poden ser més lents o cometre més errors.",
       "untestedHidden_one": "{{count}} model més no està ajustat per al dictat. Cerqueu-lo per trobar-lo.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Torna a cercar",
         "tooltip": "Torna a cercar models afegits a la carpeta de models o a la memòria cau de Hugging Face des de fora del candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Com es resol",
     "recorderBlocked": "Ara no se'n poden enregistrar dreceres: l'entrada segura del macOS bloca els esdeveniments de tecla. Resol primer l'avís d'entrada segura.",
     "dismiss": "Descarta"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

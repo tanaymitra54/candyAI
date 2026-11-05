@@ -397,7 +397,8 @@
       "sections": {
         "yours": "Sur cet ordinateur",
         "fits": "Pour vos langues",
-        "untested": "Non testés"
+        "untested": "Non testés",
+        "new": "New models"
       },
       "untestedNote": "Non testés avec candyAI. Ils peuvent être plus lents ou faire plus d'erreurs.",
       "untestedHidden_one": "{{count}} autre modèle n'est pas adapté à la dictée. Utilisez la recherche pour le trouver.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Réanalyser",
         "tooltip": "Réanalyser pour détecter les modèles ajoutés au dossier des modèles ou au cache Hugging Face en dehors de candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Comment résoudre ce problème",
     "recorderBlocked": "Impossible d'enregistrer un raccourci pour le moment : Secure Input de macOS bloque les événements clavier. Résolvez d'abord l'avertissement Secure Input.",
     "dismiss": "Ignorer"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

@@ -397,7 +397,8 @@
       "sections": {
         "yours": "على هذا الكمبيوتر",
         "fits": "للغاتك",
-        "untested": "غير مختبرة"
+        "untested": "غير مختبرة",
+        "new": "New models"
       },
       "untestedNote": "لم تُختبر مع candyAI. قد تكون أبطأ أو ترتكب أخطاء أكثر.",
       "untestedHidden_one": "نموذج آخر ({{count}}) غير مضبوط للإملاء. ابحث للعثور عليه.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "إعادة الفحص",
         "tooltip": "إعادة الفحص بحثًا عن النماذج المضافة إلى مجلد النماذج أو ذاكرة Hugging Face التخزينية المؤقتة خارج candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "كيفية الإصلاح",
     "recorderBlocked": "لا يمكن تسجيل الاختصارات الآن — يحجب Secure Input في macOS أحداث المفاتيح. عالج تحذير Secure Input أولاً.",
     "dismiss": "تجاهل"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

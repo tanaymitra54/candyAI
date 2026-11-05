@@ -17,6 +17,8 @@
 //! `GgufHeaderProber` is the same shape with `None` where a header omits a key,
 //! which is why the two are interchangeable (the catalog is a baked probe).
 
+pub mod remote;
+
 use std::collections::{BTreeSet, HashMap, HashSet};
 
 use once_cell::sync::Lazy;

@@ -875,6 +875,9 @@ pub struct ModelManager {
     /// One language detector transfer at a time, however many downloads
     /// want it.
     detector_download: tokio::sync::Mutex<()>,
+    /// Models found by the "check for new models" button, and which of them
+    /// the user hasn't seen yet. Persisted in `<app data>/model-updates.json`.
+    update_state: Mutex<crate::catalog::remote::UpdateState>,
 }
 
 impl ModelManager {
@@ -1072,6 +1075,15 @@ impl ModelManager {
         // Auto-discover transcribe-cpp GGUF models already in the shared HF cache.
         Self::discover_hf_cache_models(&mut available_models);
 
+        // Models found by a previous "check for new models" press. Re-inserted
+        // before the disk scan so a downloaded one keeps its full entry.
+        let update_state = crate::catalog::remote::load_state(app_handle);
+        for info in &update_state.models {
+            available_models
+                .entry(info.id.clone())
+                .or_insert_with(|| info.clone());
+        }
+
         let manager = Self {
             app_handle: app_handle.clone(),
             models_dir,
@@ -1079,6 +1091,7 @@ impl ModelManager {
             cancel_flags: Arc::new(Mutex::new(HashMap::new())),
             is_rescanning: Arc::new(AtomicBool::new(false)),
             detector_download: tokio::sync::Mutex::new(()),
+            update_state: Mutex::new(update_state),
         };
 
         // Migrate any bundled models to user directory
@@ -1200,6 +1213,97 @@ impl ModelManager {
     pub fn get_model_info(&self, model_id: &str) -> Option<ModelInfo> {
         let models = self.available_models.lock().unwrap();
         models.get(model_id).cloned()
+    }
+
+    /* ------------------- live discovery of new models ------------------- */
+
+    /// When the last check ran, and which models are still marked new.
+    pub fn update_snapshot(&self) -> crate::catalog::remote::UpdateSnapshot {
+        let state = self.update_state.lock().unwrap();
+        crate::catalog::remote::UpdateSnapshot {
+            fetched_at: state.fetched_at,
+            new_ids: state.new_ids.clone(),
+        }
+    }
+
+    /// The user has seen the new models: clear the badge set. The models stay
+    /// in the list, in their normal sections.
+    pub fn mark_new_models_seen(&self) {
+        let mut state = self.update_state.lock().unwrap();
+        if state.new_ids.is_empty() {
+            return;
+        }
+        state.new_ids.clear();
+        crate::catalog::remote::save_state(&self.app_handle, &state);
+    }
+
+    /// Ask Hugging Face for speech GGUFs this app can run, add the ones we
+    /// don't know about yet, and remember them for the next launch. A network
+    /// failure is reported in the result rather than raised, so the button can
+    /// say what went wrong.
+    pub async fn check_model_updates(&self) -> crate::catalog::remote::UpdateReport {
+        let known = {
+            let models = self.available_models.lock().unwrap();
+            crate::catalog::remote::known_repos(models.values().cloned())
+        };
+
+        let (found, checked) = match crate::catalog::remote::discover(&known).await {
+            Ok(result) => result,
+            Err(error) => {
+                warn!("Model update check failed: {}", error);
+                return crate::catalog::remote::UpdateReport {
+                    checked: 0,
+                    added: Vec::new(),
+                    fetched_at: None,
+                    error: Some(error),
+                };
+            }
+        };
+
+        let mut added = Vec::new();
+        {
+            let mut models = self.available_models.lock().unwrap();
+            for info in &found {
+                if let std::collections::hash_map::Entry::Vacant(slot) =
+                    models.entry(info.id.clone())
+                {
+                    slot.insert(info.clone());
+                    added.push(info.id.clone());
+                }
+            }
+        }
+
+        let fetched_at = crate::catalog::remote::timestamp();
+        {
+            let mut state = self.update_state.lock().unwrap();
+            state.fetched_at = Some(fetched_at);
+            for info in found {
+                if !state.models.iter().any(|m| m.id == info.id) {
+                    state.models.push(info);
+                }
+            }
+            for id in &added {
+                if !state.new_ids.contains(id) {
+                    state.new_ids.push(id.clone());
+                }
+            }
+            crate::catalog::remote::save_state(&self.app_handle, &state);
+        }
+
+        if let Err(e) = self.update_download_status() {
+            warn!("Could not refresh download status after model update: {e}");
+        }
+        if !added.is_empty() {
+            info!("Model update added {} model(s)", added.len());
+        }
+        let _ = self.app_handle.emit("models-updated", ());
+
+        crate::catalog::remote::UpdateReport {
+            checked,
+            added,
+            fetched_at: Some(fetched_at),
+            error: None,
+        }
     }
 
     /// Reconcile a model's advertised capabilities with the ground truth from the

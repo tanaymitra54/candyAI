@@ -28,12 +28,20 @@ interface ModelsStore {
   error: string | null;
   initialized: boolean;
   isRescanning: boolean;
+  /** Models the last update found that the user hasn't seen yet. */
+  newModelIds: string[];
+  /** When the last successful model update ran (unix seconds). */
+  lastModelUpdate: number | null;
+  isCheckingUpdates: boolean;
 
   // Actions
   initialize: () => Promise<void>;
   loadModels: () => Promise<void>;
   loadCurrentModel: () => Promise<void>;
   rescanLocalModels: () => Promise<void>;
+  checkModelUpdates: () => Promise<void>;
+  markNewModelsSeen: () => Promise<void>;
+  loadModelUpdateState: () => Promise<void>;
   selectModel: (modelId: string) => Promise<boolean>;
   downloadModel: (modelId: string) => Promise<boolean>;
   cancelDownload: (modelId: string) => Promise<boolean>;
@@ -61,6 +69,9 @@ export const useModelStore = create<ModelsStore>()(
     error: null,
     initialized: false,
     isRescanning: false,
+    newModelIds: [],
+    lastModelUpdate: null,
+    isCheckingUpdates: false,
 
     // Internal setters
     setModels: (models) => set({ models }),
@@ -132,6 +143,73 @@ export const useModelStore = create<ModelsStore>()(
         set({ error: `Failed to rescan models: ${err}` });
       } finally {
         set({ isRescanning: false });
+      }
+    },
+
+    loadModelUpdateState: async () => {
+      try {
+        const state = await commands.getModelUpdateState();
+        set({
+          newModelIds: state.newIds,
+          lastModelUpdate: state.fetchedAt,
+        });
+      } catch (err) {
+        console.error("Failed to load model update state:", err);
+      }
+    },
+
+    checkModelUpdates: async () => {
+      if (get().isCheckingUpdates) return;
+      set({ isCheckingUpdates: true });
+      try {
+        const result = await commands.checkModelUpdates();
+        if (result.status === "ok") {
+          const report = result.data;
+          set({ lastModelUpdate: report.fetchedAt });
+          if (report.error) {
+            set({ error: report.error });
+            notify({
+              level: "error",
+              title: i18n.t("modelUpdate.failed"),
+              detail: report.error,
+              key: "model-update",
+            });
+          }
+          // The backend emits `models-updated`; reload the new-id set too.
+          await get().loadModelUpdateState();
+          await get().loadModels();
+        } else {
+          set({ error: `Failed to check for new models: ${result.error}` });
+          notify({
+            level: "error",
+            title: i18n.t("modelUpdate.failed"),
+            detail: result.error,
+            key: "model-update",
+          });
+        }
+      } catch (err) {
+        const message = String(err);
+        set({ error: `Failed to check for new models: ${message}` });
+        notify({
+          level: "error",
+          title: i18n.t("modelUpdate.failed"),
+          detail: message,
+          key: "model-update",
+        });
+      } finally {
+        set({ isCheckingUpdates: false });
+      }
+    },
+
+    markNewModelsSeen: async () => {
+      // Clear locally first so the section disappears at once.
+      if (get().newModelIds.length === 0) return;
+      set({ newModelIds: [] });
+      try {
+        await commands.markNewModelsSeen();
+      } catch (err) {
+        console.error("Failed to mark new models as seen:", err);
+        await get().loadModelUpdateState();
       }
     },
 
@@ -255,10 +333,14 @@ export const useModelStore = create<ModelsStore>()(
     initialize: async () => {
       if (get().initialized) return;
 
-      const { loadModels, loadCurrentModel } = get();
+      const { loadModels, loadCurrentModel, loadModelUpdateState } = get();
 
       // Load initial data
-      await Promise.all([loadModels(), loadCurrentModel()]);
+      await Promise.all([
+        loadModels(),
+        loadCurrentModel(),
+        loadModelUpdateState(),
+      ]);
 
       // Set up event listeners
       listen<DownloadProgress>("model-download-progress", (event) => {

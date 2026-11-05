@@ -397,7 +397,8 @@
       "sections": {
         "yours": "На този компютър",
         "fits": "За вашите езици",
-        "untested": "Нетествани"
+        "untested": "Нетествани",
+        "new": "New models"
       },
       "untestedNote": "Не са тествани с candyAI. Може да са по-бавни или да правят повече грешки.",
       "untestedHidden_one": "{{count}} друг модел не е пригоден за диктуване. Потърсете, за да го намерите.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Сканиране отново",
         "tooltip": "Сканиране отново за модели, добавени в папката с модели или кеша на Hugging Face извън candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Как да поправите това",
     "recorderBlocked": "В момента не могат да се записват бързи клавиши — Secure Input на macOS блокира клавишните събития. Първо отстранете предупреждението за Secure Input.",
     "dismiss": "Отхвърляне"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

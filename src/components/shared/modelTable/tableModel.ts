@@ -46,7 +46,11 @@ export const toTableModel = (info: ModelInfo, t: TFunction): TableModel => {
         ? "legacy"
         : model?.curated
           ? "curated"
-          : "catalog",
+          : model
+            ? "catalog"
+            : // Found by the update button: not in the bundled catalog, so
+              // ungraded, but a normal model, not an untested one.
+              "discovered",
     model,
   };
 };

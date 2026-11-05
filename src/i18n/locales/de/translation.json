@@ -397,7 +397,8 @@
       "sections": {
         "yours": "Auf diesem Computer",
         "fits": "Für deine Sprachen",
-        "untested": "Ungetestet"
+        "untested": "Ungetestet",
+        "new": "New models"
       },
       "untestedNote": "Nicht mit candyAI getestet. Sie könnten langsamer sein oder mehr Fehler machen.",
       "untestedHidden_one": "{{count}} weiteres Modell ist nicht für Diktat optimiert. Suche danach, um es zu finden.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Neu scannen",
         "tooltip": "Erneut nach Modellen scannen, die außerhalb von candyAI zum Modellordner oder Hugging-Face-Cache hinzugefügt wurden"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "So behebst du das",
     "recorderBlocked": "Tastenkürzel können gerade nicht aufgezeichnet werden — macOS Secure Input blockiert Tastenereignisse. Behebe zuerst die Secure-Input-Warnung.",
     "dismiss": "Ausblenden"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

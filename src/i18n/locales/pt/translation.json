@@ -397,7 +397,8 @@
       "sections": {
         "yours": "Neste computador",
         "fits": "Para os seus idiomas",
-        "untested": "Não testados"
+        "untested": "Não testados",
+        "new": "New models"
       },
       "untestedNote": "Não testados com o candyAI. Podem ser mais lentos ou cometer mais erros.",
       "untestedHidden_one": "Mais {{count}} modelo não é otimizado para ditado. Busque para encontrá-lo.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Reescanear",
         "tooltip": "Reescaneia em busca de modelos adicionados à pasta de modelos ou ao cache do Hugging Face fora do candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Como resolver isso",
     "recorderBlocked": "Não é possível gravar atalhos agora — o Secure Input do macOS está bloqueando os eventos de tecla. Resolva primeiro o aviso do Secure Input.",
     "dismiss": "Dispensar"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

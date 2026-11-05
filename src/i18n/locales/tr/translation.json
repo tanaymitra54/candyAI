@@ -397,7 +397,8 @@
       "sections": {
         "yours": "Bu bilgisayarda",
         "fits": "Dilleriniz için",
-        "untested": "Test edilmemiş"
+        "untested": "Test edilmemiş",
+        "new": "New models"
       },
       "untestedNote": "candyAI ile test edilmedi. Daha yavaş olabilir veya daha fazla hata yapabilir.",
       "untestedHidden_one": "{{count}} model daha yazdırma için ayarlanmamış. Bulmak için arama yapın.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Yeniden Tara",
         "tooltip": "candyAI dışında modeller klasörüne veya Hugging Face önbelleğine eklenen modelleri yeniden tara"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Bu nasıl düzeltilir",
     "recorderBlocked": "Şu anda kısayol kaydedilemiyor — macOS Secure Input tuş olaylarını engelliyor. Önce Secure Input uyarısını giderin.",
     "dismiss": "Kapat"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

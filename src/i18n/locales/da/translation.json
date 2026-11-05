@@ -397,7 +397,8 @@
       "sections": {
         "yours": "På denne computer",
         "fits": "Til dine sprog",
-        "untested": "Ikke testet"
+        "untested": "Ikke testet",
+        "new": "New models"
       },
       "untestedNote": "Ikke testet med candyAI. De kan være langsommere eller lave flere fejl.",
       "untestedHidden_one": "{{count}} model mere er ikke tilpasset diktering. Søg for at finde den.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Søg igen",
         "tooltip": "Søg igen efter modeller, der er tilføjet til modelmappen eller Hugging Face-cachen uden for candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Sådan løser du det",
     "recorderBlocked": "Genveje kan ikke optages lige nu — macOS Secure Input blokerer tastehændelser. Løs advarslen om Secure Input først.",
     "dismiss": "Afvis"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

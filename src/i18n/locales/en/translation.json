@@ -397,7 +397,8 @@
       "sections": {
         "yours": "On this computer",
         "fits": "For your languages",
-        "untested": "Untested"
+        "untested": "Untested",
+        "new": "New models"
       },
       "untestedNote": "Not tested with candyAI. They may be slower or make more mistakes.",
       "untestedHidden_one": "{{count}} more model isn’t tuned for dictation. Search to find it.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Rescan",
         "tooltip": "Rescan for models added to the models folder or Hugging Face cache outside candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "How to fix",
     "recorderBlocked": "Can't record shortcuts right now — macOS Secure Input is blocking key events. Resolve the Secure Input warning first.",
     "dismiss": "Dismiss"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

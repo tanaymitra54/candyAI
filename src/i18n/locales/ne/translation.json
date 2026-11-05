@@ -397,7 +397,8 @@
       "sections": {
         "yours": "यो कम्प्युटरमा",
         "fits": "तपाईंका भाषाहरूका लागि",
-        "untested": "परीक्षण नगरिएको"
+        "untested": "परीक्षण नगरिएको",
+        "new": "New models"
       },
       "untestedNote": "candyAI मा परीक्षण गरिएको छैन। यिनी ढिलो हुन सक्छन् वा बढी गल्ती गर्न सक्छन्।",
       "untestedHidden_one": "थप {{count}} मोडेल डिक्टेसनका लागि ट्युन गरिएको छैन। भेट्न खोज्नुहोस्।",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "फेरि स्क्यान गर्नुहोस्",
         "tooltip": "candyAI बाहिरबाट मोडेल फोल्डर वा Hugging Face क्यासमा थपिएका मोडेलहरू फेरि स्क्यान गर्नुहोस्"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "यसलाई कसरी ठिक गर्ने",
     "recorderBlocked": "अहिले सर्टकट रेकर्ड गर्न सकिँदैन — macOS Secure Input ले कुञ्जी इभेन्टहरू रोकिरहेको छ। पहिले Secure Input चेतावनी समाधान गर्नुहोस्।",
     "dismiss": "हटाउनुहोस्"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

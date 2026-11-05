@@ -397,7 +397,8 @@
       "sections": {
         "yours": "इस कंप्यूटर पर",
         "fits": "आपकी भाषाओं के लिए",
-        "untested": "अपरीक्षित"
+        "untested": "अपरीक्षित",
+        "new": "New models"
       },
       "untestedNote": "candyAI के साथ परखे नहीं गए हैं. ये धीमे हो सकते हैं या ज़्यादा गलतियां कर सकते हैं.",
       "untestedHidden_one": "{{count}} और मॉडल डिक्टेशन के लिए ट्यून नहीं है. उसे ढूंढने के लिए खोजें.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "फिर से स्कैन करें",
         "tooltip": "candyAI के बाहर, मॉडल फ़ोल्डर या Hugging Face कैश में जोड़े गए मॉडल के लिए फिर से स्कैन करें"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "इसे कैसे ठीक करें",
     "recorderBlocked": "अभी शॉर्टकट रिकॉर्ड नहीं किए जा सकते — macOS Secure Input कुंजी इवेंट ब्लॉक कर रहा है. पहले Secure Input चेतावनी हल करें.",
     "dismiss": "खारिज करें"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

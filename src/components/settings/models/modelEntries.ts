@@ -25,6 +25,8 @@ export type Facts = Grading & {
 };
 
 export interface Lists {
+  /** Found by the update button and not seen yet: shown first, once. */
+  newModels: Entry[];
   /** On disk: the one in use first, then best fit; custom and old last. */
   yours: Entry[];
   /** Curated, not on disk, hearing all your languages: the picks first. */
@@ -35,7 +37,20 @@ export interface Lists {
   untested: Entry[];
 }
 
-const KIND_ORDER = { curated: 0, catalog: 0, custom: 1, legacy: 2 } as const;
+const KIND_ORDER = {
+  curated: 0,
+  catalog: 0,
+  discovered: 0,
+  custom: 1,
+  legacy: 2,
+} as const;
+
+/** A language code without its region or script (`en-US` → `en`). */
+const base = (code: string) => code.split(/[-_]/)[0].toLowerCase();
+
+/** The user's languages this entry doesn't advertise hearing. */
+const missingFrom = (e: Entry, langs: string[]) =>
+  langs.filter((l) => !e.languages.some((m) => base(m) === base(l)));
 
 /** Every model on the page, graded for `spoken_languages`, in sections. */
 export const useModelEntries = () => {
@@ -46,6 +61,7 @@ export const useModelEntries = () => {
   const { groups, grading } = useModelCatalog(langs);
   const infos = useModelStore((s) => s.models);
   const current = useModelStore((s) => s.currentModel);
+  const newIds = useModelStore((s) => s.newModelIds);
 
   const entries = useMemo(
     () =>
@@ -80,10 +96,19 @@ export const useModelEntries = () => {
 
   const lists = useMemo((): Lists => {
     const infoById = new Map(infos.map((i) => [i.id, i]));
+    const newSet = new Set(newIds);
     // A download stays where it was pressed until it's done.
     const onDisk = (e: Entry) => !!infoById.get(e.id)?.is_downloaded;
     const byFit = (a: Entry, b: Entry) => facts.rankOf(a) - facts.rankOf(b);
-    const yours = entries
+    // Discovered models aren't in the bundled catalog, so they carry their own
+    // language list; everything else grades from its catalog entry.
+    const missing = (e: Entry) =>
+      e.model ? facts.missing(e.model) : missingFrom(e, facts.langs);
+
+    const newModels = entries.filter((e) => newSet.has(e.id)).sort(byFit);
+    // A model shown under New isn't repeated in its normal section.
+    const settled = entries.filter((e) => !newSet.has(e.id));
+    const yours = settled
       .filter(onDisk)
       .sort(
         (a, b) =>
@@ -91,15 +116,20 @@ export const useModelEntries = () => {
           KIND_ORDER[a.kind] - KIND_ORDER[b.kind] ||
           byFit(a, b),
       );
-    const rest = entries.filter((e) => !onDisk(e));
-    const curated = rest.filter((e) => e.kind === "curated").sort(byFit);
+    const rest = settled.filter((e) => !onDisk(e));
+    const offered = rest
+      .filter((e) => e.kind === "curated" || e.kind === "discovered")
+      .sort(byFit);
     return {
+      newModels,
       yours,
-      fits: curated.filter((e) => !facts.missing(e.model).length),
-      partial: curated.filter((e) => facts.missing(e.model).length > 0),
-      untested: rest.filter((e) => e.kind !== "curated").sort(byFit),
+      fits: offered.filter((e) => !missing(e).length),
+      partial: offered.filter((e) => missing(e).length > 0),
+      untested: rest
+        .filter((e) => e.kind !== "curated" && e.kind !== "discovered")
+        .sort(byFit),
     };
-  }, [entries, infos, current, facts]);
+  }, [entries, infos, current, facts, newIds]);
 
   return { facts, lists };
 };

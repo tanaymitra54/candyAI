@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { RefreshCw } from "lucide-react";
+import { CloudDownload, RefreshCw } from "lucide-react";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useModelStore } from "@/stores/modelStore";
 import {
@@ -39,6 +39,40 @@ const Rescan: React.FC = () => {
   );
 };
 
+/** Ask Hugging Face whether new speech models exist, and fetch them. */
+const UpdateModels: React.FC = () => {
+  const { t } = useTranslation();
+  const checking = useModelStore((s) => s.isCheckingUpdates);
+  const lastUpdate = useModelStore((s) => s.lastModelUpdate);
+  return (
+    <div className="flex flex-none items-center gap-[8px]">
+      {lastUpdate != null && !checking && (
+        <span className="text-small text-ink-3">
+          {t("settings.models.update.lastChecked", {
+            date: new Date(lastUpdate * 1000).toLocaleDateString(),
+          })}
+        </span>
+      )}
+      <Tooltip text={t("settings.models.update.tooltip")}>
+        <button
+          type="button"
+          onClick={() => useModelStore.getState().checkModelUpdates()}
+          disabled={checking}
+          className="flex h-[28px] cursor-pointer items-center gap-[6px] rounded-[7px] px-[10px] text-small font-medium text-ink-2 hover:bg-wash hover:text-text disabled:cursor-default disabled:opacity-60 focus:outline-none focus-visible:ring-1 focus-visible:ring-logo-primary"
+        >
+          <CloudDownload
+            className={`size-[13px] ${checking ? "animate-pulse" : ""}`}
+            aria-hidden="true"
+          />
+          {checking
+            ? t("settings.models.update.checking")
+            : t("settings.models.update.label")}
+        </button>
+      </Tooltip>
+    </div>
+  );
+};
+
 interface ModelsSettingsProps {
   /** Where the languages are changed (General). */
   onChangeLanguages?: () => void;
@@ -53,6 +87,16 @@ export const ModelsSettings: React.FC<ModelsSettingsProps> = ({
   const { facts, lists } = useModelEntries();
   const { filters, setFilters, searching, matches } = useModelFilters();
   const [more, setMore] = useState(false);
+
+  // Models are "new" only until the page is left. A fast unmount is React's
+  // development double-mount, not a visit, so it doesn't count.
+  useEffect(() => {
+    const mountedAt = Date.now();
+    return () => {
+      if (Date.now() - mountedAt < 1000) return;
+      void useModelStore.getState().markNewModelsSeen();
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -83,8 +127,16 @@ export const ModelsSettings: React.FC<ModelsSettingsProps> = ({
     </button>
   );
 
+  const newSection: TableSection = {
+    key: "new",
+    label: t("settings.models.sections.new"),
+    rows: keep(lists.newModels),
+    note: t("settings.models.newNote"),
+  };
+
   const sections: TableSection[] = searching
     ? [
+        ...(keep(lists.newModels).length ? [newSection] : []),
         {
           key: "yours",
           label: t("settings.models.sections.yours"),
@@ -108,6 +160,7 @@ export const ModelsSettings: React.FC<ModelsSettingsProps> = ({
         },
       ]
     : [
+        ...(lists.newModels.length ? [newSection] : []),
         {
           key: "yours",
           label: (
@@ -141,15 +194,18 @@ export const ModelsSettings: React.FC<ModelsSettingsProps> = ({
           grades are for. */}
       <div className="mb-[16px] flex flex-none items-center justify-between gap-[12px] px-[12px]">
         <h1 className="text-xl font-semibold">{t("settings.models.title")}</h1>
-        {onChangeLanguages && (
-          <button
-            type="button"
-            onClick={onChangeLanguages}
-            className="shrink-0 cursor-pointer text-sm text-text underline decoration-line-strong underline-offset-[3px] hover:decoration-text focus:outline-none focus-visible:ring-1 focus-visible:ring-logo-primary"
-          >
-            {t("settings.models.changeLanguages")}
-          </button>
-        )}
+        <div className="flex items-center gap-[12px]">
+          <UpdateModels />
+          {onChangeLanguages && (
+            <button
+              type="button"
+              onClick={onChangeLanguages}
+              className="shrink-0 cursor-pointer text-sm text-text underline decoration-line-strong underline-offset-[3px] hover:decoration-text focus:outline-none focus-visible:ring-1 focus-visible:ring-logo-primary"
+            >
+              {t("settings.models.changeLanguages")}
+            </button>
+          )}
+        </div>
       </div>
       <div className="mx-[12px] mb-[16px] flex-none empty:hidden">
         <RetiredModelsNotice />

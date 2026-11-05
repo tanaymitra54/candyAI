@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { CloudDownload } from "lucide-react";
 import type { ModelInfo } from "@/bindings";
+import { useModelStore } from "@/stores/modelStore";
 import {
   getTranslatedModelName,
   getTranslatedModelDescription,
@@ -21,6 +23,8 @@ const ModelDropdown: React.FC<ModelDropdownProps> = ({
   onModelSelect,
 }) => {
   const { t } = useTranslation();
+  const checking = useModelStore((s) => s.isCheckingUpdates);
+  const newCount = useModelStore((s) => s.newModelIds.length);
   const downloadedModels = models.filter((m) => m.is_downloaded);
 
   const handleModelClick = (modelId: string) => {
@@ -30,6 +34,26 @@ const ModelDropdown: React.FC<ModelDropdownProps> = ({
 
   return (
     <div className="absolute bottom-full start-0 mb-2 w-64 max-h-[60vh] overflow-y-auto bg-background border border-line rounded-lg shadow-lg py-2 z-50">
+      <div className="flex items-center justify-between gap-2 px-3 pb-2 mb-1 border-b border-line">
+        <span className="text-xs text-ink-3">
+          {newCount > 0
+            ? t("modelUpdate.newAvailable", { count: newCount })
+            : t("settings.models.update.short")}
+        </span>
+        <button
+          type="button"
+          onClick={() => useModelStore.getState().checkModelUpdates()}
+          disabled={checking}
+          aria-label={t("settings.models.update.tooltip")}
+          title={t("settings.models.update.tooltip")}
+          className="grid size-[22px] cursor-pointer place-items-center rounded-full text-ink-3 hover:bg-wash hover:text-text disabled:cursor-default disabled:opacity-60 focus:outline-none focus-visible:ring-1 focus-visible:ring-logo-primary"
+        >
+          <CloudDownload
+            className={`size-[13px] ${checking ? "animate-pulse" : ""}`}
+            aria-hidden="true"
+          />
+        </button>
+      </div>
       {locked && (
         <div className="px-3 pb-2 mb-1 text-xs text-ink-2 border-b border-line">
           {t("modelSelector.lockedWhileTranscribing")}

@@ -397,7 +397,8 @@
       "sections": {
         "yours": "Trên máy tính này",
         "fits": "Cho các ngôn ngữ của bạn",
-        "untested": "Chưa kiểm thử"
+        "untested": "Chưa kiểm thử",
+        "new": "New models"
       },
       "untestedNote": "Chưa được kiểm thử với candyAI. Chúng có thể chậm hơn hoặc mắc nhiều lỗi hơn.",
       "untestedHidden_one": "{{count}} mô hình khác chưa được tinh chỉnh cho việc đọc chính tả. Hãy tìm kiếm để thấy nó.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Quét lại",
         "tooltip": "Quét lại các mô hình được thêm vào thư mục mô hình hoặc bộ nhớ đệm Hugging Face bên ngoài candyAI"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Cách khắc phục",
     "recorderBlocked": "Hiện không thể ghi phím tắt — Secure Input của macOS đang chặn các sự kiện phím. Hãy xử lý cảnh báo Secure Input trước.",
     "dismiss": "Bỏ qua"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

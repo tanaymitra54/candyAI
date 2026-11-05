@@ -397,7 +397,8 @@
       "sections": {
         "yours": "このコンピューター上",
         "fits": "選んだ言語向け",
-        "untested": "未テスト"
+        "untested": "未テスト",
+        "new": "New models"
       },
       "untestedNote": "candyAI ではテストされていません。速度が遅かったり、間違いが多かったりする可能性があります。",
       "untestedHidden_one": "音声入力向けに調整されていないモデルがあと {{count}} 個あります。検索で見つけられます。",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "再スキャン",
         "tooltip": "candyAI を使わずに models フォルダーまたは Hugging Face キャッシュに追加されたモデルを再スキャンします"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "解決方法",
     "recorderBlocked": "現在ショートカットを記録できません。macOS の Secure Input がキーイベントをブロックしています。先に Secure Input の警告を解消してください。",
     "dismiss": "閉じる"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

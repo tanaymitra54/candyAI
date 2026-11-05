@@ -397,7 +397,8 @@
       "sections": {
         "yours": "이 컴퓨터에 있는 모델",
         "fits": "선택한 언어용",
-        "untested": "테스트되지 않음"
+        "untested": "테스트되지 않음",
+        "new": "New models"
       },
       "untestedNote": "candyAI에서 테스트하지 않았습니다. 더 느리거나 오류가 더 많을 수 있습니다.",
       "untestedHidden_one": "받아쓰기에 맞춰 조정되지 않은 모델이 {{count}}개 더 있습니다. 검색해서 찾아보세요.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "다시 스캔",
         "tooltip": "candyAI 외부에서 모델 폴더 또는 Hugging Face 캐시에 추가된 모델을 다시 스캔합니다"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "해결 방법",
     "recorderBlocked": "지금은 단축키를 등록할 수 없습니다. macOS Secure Input이 키 이벤트를 차단하고 있습니다. Secure Input 경고를 먼저 해결하세요.",
     "dismiss": "닫기"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

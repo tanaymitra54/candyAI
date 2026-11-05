@@ -397,7 +397,8 @@
       "sections": {
         "yours": "Op deze computer",
         "fits": "Voor jouw talen",
-        "untested": "Niet getest"
+        "untested": "Niet getest",
+        "new": "New models"
       },
       "untestedNote": "Niet getest met candyAI. Ze kunnen langzamer zijn of meer fouten maken.",
       "untestedHidden_one": "{{count}} ander model is niet afgestemd op dicteren. Zoek om het te vinden.",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "Opnieuw scannen",
         "tooltip": "Scannen naar modellen die buiten candyAI om zijn toegevoegd aan de modellenmap of Hugging Face-cache"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "Hoe je dit oplost",
     "recorderBlocked": "Sneltoetsen kunnen nu niet worden opgenomen — Secure Input van macOS blokkeert toetsgebeurtenissen. Los eerst de Secure Input-waarschuwing op.",
     "dismiss": "Sluiten"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

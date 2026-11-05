@@ -59,7 +59,7 @@ const KEY_LANGUAGES: &str = "general.languages";
 const KEY_CAP_STREAMING: &str = "stt.capability.streaming";
 const KEY_CAP_TRANSLATE: &str = "stt.capability.translate";
 const KEY_CAP_LANG_DETECT: &str = "stt.capability.lang_detect";
-const PROBE_KEYS: &[&str] = &[
+pub(crate) const PROBE_KEYS: &[&str] = &[
     KEY_ARCH,
     KEY_NAME,
     KEY_VARIANT,

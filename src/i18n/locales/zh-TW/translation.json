@@ -397,7 +397,8 @@
       "sections": {
         "yours": "在這台電腦上",
         "fits": "適用於您的語言",
-        "untested": "未測試"
+        "untested": "未測試",
+        "new": "New models"
       },
       "untestedNote": "尚未經過 candyAI 測試，可能較慢或錯誤較多。",
       "untestedHidden_one": "另有 {{count}} 個模型並未針對聽寫調校，請搜尋以找到它。",
@@ -431,6 +432,14 @@
       "rescan": {
         "label": "重新掃描",
         "tooltip": "重新掃描在 candyAI 之外新增到模型資料夾或 Hugging Face 快取中的模型"
+      },
+      "newNote": "Just found on Hugging Face. Not tested with candyAI — try one and see how it does.",
+      "update": {
+        "label": "Check for new models",
+        "short": "New models",
+        "tooltip": "Look on Hugging Face for speech models candyAI can run, and add the new ones to this list",
+        "checking": "Checking…",
+        "lastChecked": "Checked {{date}}"
       }
     },
     "languages": {
@@ -988,5 +997,10 @@
     "learnMore": "如何解決",
     "recorderBlocked": "目前無法錄製快捷鍵——macOS 的 Secure Input 正在阻擋按鍵事件。請先解決 Secure Input 警告。",
     "dismiss": "關閉"
+  },
+  "modelUpdate": {
+    "failed": "Couldn’t check for new models",
+    "newAvailable_one": "{{count}} new model waiting in Settings › Models",
+    "newAvailable_other": "{{count}} new models waiting in Settings › Models"
   }
 }

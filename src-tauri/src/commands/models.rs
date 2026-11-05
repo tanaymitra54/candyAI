@@ -37,6 +37,34 @@ pub async fn rescan_local_models(
         .map_err(|e| e.to_string())
 }
 
+/// Ask Hugging Face for speech models the app can run that it hasn't seen yet.
+/// Adds them to the model list and marks them new until the Models page is left.
+#[tauri::command]
+#[specta::specta]
+pub async fn check_model_updates(
+    model_manager: State<'_, Arc<ModelManager>>,
+) -> Result<crate::catalog::remote::UpdateReport, String> {
+    let mm = model_manager.inner().clone();
+    Ok(mm.check_model_updates().await)
+}
+
+/// When the last update ran, and which models are still new.
+#[tauri::command]
+#[specta::specta]
+pub fn get_model_update_state(
+    model_manager: State<'_, Arc<ModelManager>>,
+) -> crate::catalog::remote::UpdateSnapshot {
+    model_manager.update_snapshot()
+}
+
+/// The user has seen the new models: they move into their normal sections.
+#[tauri::command]
+#[specta::specta]
+pub fn mark_new_models_seen(model_manager: State<'_, Arc<ModelManager>>) -> Result<(), String> {
+    model_manager.mark_new_models_seen();
+    Ok(())
+}
+
 #[tauri::command]
 #[specta::specta]
 pub async fn download_model(
