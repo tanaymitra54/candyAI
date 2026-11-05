@@ -1,0 +1,99 @@
+/* candyAI palette.
+ *
+ * Dark only, warm orange family. There is no light palette and no OS
+ * following: the app is always dark. Every token the components use keeps
+ * its original name, so nothing else has to change.
+ *
+ * Jobs, same as upstream: ink-2/ink-3/line/line-strong/wash for text, edges
+ * and fills; logo-primary / background-ui for brand and primary actions;
+ * plum for keycaps and picks; moss / warning / error for status.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Base surfaces. Deep warm brown-black, not neutral grey. */
+  --color-background: #140e09;
+  --color-text: #fdf1e3;
+
+  /* Brand. Primary orange, with lighter tones for accents and hovers. */
+  --color-logo-primary: #ff8a3d;
+  --color-background-ui: #ff7a1a;
+  --color-orange-bright: #ffa15c;
+  --color-orange-soft: #ffc79a;
+  --color-orange-deep: #c85a12;
+
+  /* Status. Kept inside the warm family but still distinguishable. */
+  --color-warning: #ffc266;
+  --color-error: #ff5f45;
+  --color-moss: #ffcf87;
+
+  /* Keycaps and picked items. */
+  --color-plum: #ffe3c7;
+
+  /* Warm grey steps. */
+  --color-mid-gray: #a2907f;
+  --color-ink-2: color-mix(in srgb, var(--color-text) 62%, transparent);
+  --color-ink-3: var(--color-mid-gray);
+  --color-line-strong: color-mix(
+    in srgb,
+    var(--color-mid-gray) 78%,
+    transparent
+  );
+  --color-line: color-mix(in srgb, var(--color-mid-gray) 20%, transparent);
+  --color-wash: color-mix(in srgb, var(--color-mid-gray) 10%, transparent);
+  --color-plum-pick: color-mix(in srgb, var(--color-plum) 60%, transparent);
+  --color-plum-faint: color-mix(in srgb, var(--color-plum) 22%, transparent);
+
+  /* Status washes. */
+  --color-moss-wash: color-mix(
+    in srgb,
+    var(--color-moss) 14%,
+    var(--color-background)
+  );
+  --color-warning-wash: color-mix(
+    in srgb,
+    var(--color-warning) 14%,
+    var(--color-background)
+  );
+  --color-error-wash: color-mix(
+    in srgb,
+    var(--color-error) 16%,
+    var(--color-background)
+  );
+
+  /* Surfaces. */
+  --color-log-surface: color-mix(in srgb, var(--color-background), black 22%);
+  --color-panel: color-mix(in srgb, #fff 5%, var(--color-background));
+  --color-panel-raised: color-mix(in srgb, #fff 8%, var(--color-background));
+
+  /* Wordmark and mascot. */
+  --color-wordmark: var(--color-logo-primary);
+  --color-wordmark-stroke: #2a1a10;
+  --color-mascot-line: var(--color-background);
+
+  /* Demo's drawn app window and laptop. */
+  --color-demo-window: color-mix(in srgb, #fff 5%, var(--color-background));
+  --color-demo-lid: #0d0906;
+  --color-demo-alu-hi: #6b5646;
+  --color-demo-alu-lo: #3a2c22;
+  --demo-wallpaper:
+    radial-gradient(
+      110% 80% at 90% 105%,
+      color-mix(in srgb, var(--color-logo-primary) 30%, #1a0f07) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 80% at 5% -5%,
+      color-mix(in srgb, #c85a12 40%, #1a0f07) 0%,
+      transparent 62%
+    ),
+    #1a0f07;
+  --demo-pill-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-logo-primary) 22%, transparent),
+    0 10px 26px -10px rgba(0, 0, 0, 0.7);
+
+  /* Scrollbars. */
+  --scrollbar-thumb: color-mix(in srgb, var(--color-logo-primary) 45%, transparent);
+  --scrollbar-track: transparent;
+}
