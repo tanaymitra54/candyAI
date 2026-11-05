@@ -1,22 +1,62 @@
-# candyAI
+<p align="center">
+  <img src="docs/icon.png" width="140" alt="candyAI icon" />
+</p>
 
-A private, on-device speech-to-text app for macOS. Hold a key, speak, and the text is typed
-for you. Audio never leaves the machine.
+<h1 align="center">candyAI</h1>
 
-candyAI is a redistribution of [Handy](https://github.com/cjpais/Handy) by CJ Pais, rebranded
-and restyled. See [NOTICE.md](NOTICE.md) for the attribution this licence requires.
+<p align="center">
+  Private, on-device speech to text for macOS.<br/>
+  Hold a key, speak, and the words appear where your cursor is.
+</p>
+
+<p align="center">
+  <img alt="macOS" src="https://img.shields.io/badge/macOS-arm64-ff8a3d?style=flat-square" />
+  <img alt="version" src="https://img.shields.io/badge/version-1.0.0-ff8a3d?style=flat-square" />
+  <img alt="licence" src="https://img.shields.io/badge/licence-MIT-ff8a3d?style=flat-square" />
+  <img alt="runs locally" src="https://img.shields.io/badge/audio-never%20uploaded-ff8a3d?style=flat-square" />
+</p>
+
+---
+
+## Screenshots
+
+All screenshots are renders of candyAI's own frontend with a stubbed native layer, captured at
+2× on a 1100×720 window. Reproduce them with `bun run dev` and `node scripts/shot.mjs`.
+
+### General
+
+<img src="docs/screenshots/general.png" alt="candyAI general settings" width="100%" />
+
+### Models
+
+<img src="docs/screenshots/models.png" alt="candyAI model list" width="100%" />
+
+### History
+
+<img src="docs/screenshots/history.png" alt="candyAI transcription history" width="100%" />
+
+### Advanced
+
+<img src="docs/screenshots/advanced.png" alt="candyAI advanced settings" width="100%" />
+
+### About
+
+<img src="docs/screenshots/about.png" alt="candyAI about panel" width="100%" />
+
+---
 
 ## What it does
 
-- Global shortcut dictation, push-to-talk or toggle
-- Local transcription on Metal, no network calls
-- Default model: **Parakeet Unified English 0.6B** (Q8_0, GGUF)
-- Recording overlay, tray control, transcription history
+- Global shortcut dictation, hold-to-talk or tap-to-toggle
+- Fully local transcription on Metal (Apple Silicon), no network calls
+- Default model: **Parakeet Unified English 0.6B**, Q8_0 GGUF
+- Recording overlay, menu bar control, searchable history
 - Optional post-processing through an LLM provider you configure yourself
+- Self-update disabled; the build you install is the build you keep
 
 ## Design
 
-Dark only, no light mode. Warm orange palette, one token file:
+Dark only. No light mode, and no following the OS. Warm orange palette, one token file.
 
 | Role | Token | Value |
 |---|---|---|
@@ -26,12 +66,13 @@ Dark only, no light mode. Warm orange palette, one token file:
 | Action fill | `--color-background-ui` | `#ff7a1a` |
 | Accent | `--color-orange-soft` | `#ffc79a` |
 
-All colours live in `src/styles/theme.css`. Contrast was audited to WCAG 2.2; every body-text
-pair clears 4.5:1.
+Colours live in [`src/styles/theme.css`](src/styles/theme.css). Contrast was audited to
+WCAG 2.2 — every body-text pair clears 4.5:1, and primary buttons use dark ink on orange
+rather than white.
 
 ## Requirements
 
-- macOS (arm64 build verified on Apple Silicon)
+- macOS on Apple Silicon (verified on M1)
 - Rust stable
 - [Bun](https://bun.sh)
 - Xcode Command Line Tools
@@ -50,27 +91,27 @@ CMAKE_POLICY_VERSION_MINIMUM=3.5 bun run tauri build --bundles app
 
 The bundle lands in `src-tauri/target/release/bundle/macos/candyAI.app`.
 
-No notarization is configured. The build is ad-hoc signed and runs only on the machine that
-produced it unless you supply a Developer ID.
+The build is ad-hoc signed. It runs on the machine that produced it; distributing it needs a
+Developer ID and notarization.
 
-## Model
+## Default model
 
-The default model is set in `src-tauri/src/settings.rs`:
+Set in [`src-tauri/src/settings.rs`](src-tauri/src/settings.rs):
 
 ```
 handy-computer/parakeet-unified-en-0.6b-gguf/parakeet-unified-en-0.6b-Q8_0.gguf
 ```
 
-Weights are downloaded on first use from Hugging Face and cached in
-`~/Library/Application Support/com.candyai.io/models/`. They are not in this repo.
+Weights download on first use from Hugging Face and are cached in
+`~/Library/Application Support/com.candyai.io/models/`. They are not in this repository.
 
-## Updates
+Measured on an M1: 49 s of audio transcribed in 4.2 s, about 11.6× real time, Metal backend.
 
-Self-update is disabled. `plugins.updater.endpoints` is empty and no updater artifacts are
-produced. Install new builds manually.
+## Licence and attribution
 
-## Licence
+MIT. candyAI is a redistribution of [Handy](https://github.com/cjpais/Handy) by CJ Pais.
+The upstream copyright notice is retained in [LICENSE](LICENSE), and every modification is
+listed in [NOTICE.md](NOTICE.md).
 
-MIT. The upstream copyright notice is retained in [LICENSE](LICENSE) and the modifications are
-listed in [NOTICE.md](NOTICE.md). The default model weights are licensed **CC-BY-4.0** by NVIDIA,
-separately from the application code.
+The default model weights are licensed **CC-BY-4.0** by NVIDIA, separately from this
+application's code.

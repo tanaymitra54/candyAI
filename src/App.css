@@ -204,6 +204,9 @@
 
   /* candyAI is dark only: the OS must never draw light native controls. */
   color-scheme: dark;
+
+  /* Native form controls (range sliders, checkboxes) follow the brand. */
+  accent-color: var(--color-logo-primary);
 }
 
 .container {
